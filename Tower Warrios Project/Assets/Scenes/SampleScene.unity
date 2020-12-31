@@ -210,6 +210,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1254138566}
     m_Modifications:
+    - target: {fileID: 724974921173845988, guid: 3f45285b2c91f9343beb26c144135c4a, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3632539085192772059, guid: 3f45285b2c91f9343beb26c144135c4a, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -339,6 +343,7 @@ MonoBehaviour:
   thirdRotationSmoothing: 0.8
   rotationDivisor: 3
   fallRotation: 50
+  characterHeight: 0.97
   isAI: 0
 --- !u!4 &606004829
 Transform:
@@ -362,6 +367,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1234947191}
     m_Modifications:
+    - target: {fileID: 724974921173845988, guid: 3f45285b2c91f9343beb26c144135c4a, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3632539085192772059, guid: 3f45285b2c91f9343beb26c144135c4a, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -463,6 +472,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1397804224}
     m_Modifications:
+    - target: {fileID: 724974921173845988, guid: 3f45285b2c91f9343beb26c144135c4a, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3632539085192772059, guid: 3f45285b2c91f9343beb26c144135c4a, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -564,6 +577,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 501169215}
     m_Modifications:
+    - target: {fileID: 724974921173845988, guid: 3f45285b2c91f9343beb26c144135c4a, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3632539085192772059, guid: 3f45285b2c91f9343beb26c144135c4a, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -691,6 +708,9 @@ MonoBehaviour:
   target: {fileID: 1254138565}
   opponent: {fileID: 606004828}
   minAttackDistance: 1.5
+  timeForRegroup: 1
+  minFallenSwordsmen: 1
+  fallenSwordsmen: []
 --- !u!114 &1254138565
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -717,6 +737,7 @@ MonoBehaviour:
   thirdRotationSmoothing: 0.8
   rotationDivisor: 3
   fallRotation: 50
+  characterHeight: 0.97
   isAI: 1
 --- !u!4 &1254138566
 Transform:
@@ -740,6 +761,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 741889601}
     m_Modifications:
+    - target: {fileID: 724974921173845988, guid: 3f45285b2c91f9343beb26c144135c4a, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3632539085192772059, guid: 3f45285b2c91f9343beb26c144135c4a, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1141,6 +1166,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 606004829}
     m_Modifications:
+    - target: {fileID: 724974921173845988, guid: 3f45285b2c91f9343beb26c144135c4a, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3632539085192772059, guid: 3f45285b2c91f9343beb26c144135c4a, type: 3}
       propertyPath: m_RootOrder
       value: 1

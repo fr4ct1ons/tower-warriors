@@ -19,6 +19,7 @@ public class Captain : MonoBehaviour
     [SerializeField] private float thirdRotationSmoothing = 0.05f;
     [SerializeField] private float rotationDivisor = 3.0f;
     [SerializeField] private float fallRotation = 20.0f;
+    [SerializeField] private float characterHeight = 0.97f;
 
     [Space]
     [SerializeField] private bool isAI = false;
@@ -33,9 +34,11 @@ public class Captain : MonoBehaviour
     private bool isPending = false;
 
     public delegate void Command();
+    public delegate void CommandSwordsman(Swordsman character);
     public delegate void CommandFloat(float val);
 
     public event Command OnAttack;
+    public event CommandSwordsman OnFall;
     public event CommandFloat OnMove;
 
     public Swordsman GetCaptain
@@ -144,9 +147,11 @@ public class Captain : MonoBehaviour
 
             if (Mathf.Abs(tempAngles) > fallRotation)
             {
+                
                 for (int j = swordsmen.Count - 1; j >= i; j--)
                 {
                     swordsmen[j].FallOff();
+                    OnFall?.Invoke(swordsmen[j]);
                     swordsmen.RemoveAt(j);
                 }
                 
@@ -169,5 +174,13 @@ public class Captain : MonoBehaviour
     {
         if(!isAI)
             inputs.Gameplay.Disable();
+    }
+
+    public void Regroup(Swordsman newSwordsman)
+    {
+        swordsmen.Insert(1, newSwordsman);
+        swordsmen[1].transform.SetParent(swordsmen[0].transform, false);
+        swordsmen[1].transform.localPosition = new Vector3(0.0f, characterHeight, 0.0f);
+        swordsmen[2].transform.SetParent(swordsmen[1].transform, false);
     }
 }

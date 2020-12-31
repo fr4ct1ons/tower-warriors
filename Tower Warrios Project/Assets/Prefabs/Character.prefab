@@ -102,6 +102,102 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &2669128611456720430
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 724974921173845988}
+  - component: {fileID: 6936304476425911378}
+  - component: {fileID: 80262338130033250}
+  m_Layer: 0
+  m_Name: RegroupCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &724974921173845988
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2669128611456720430}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8005214334106607269}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &6936304476425911378
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2669128611456720430}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1
+--- !u!114 &80262338130033250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2669128611456720430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8a2e9753ea843a49abfa9956032e950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onCollisionEnter2D:
+    m_PersistentCalls:
+      m_Calls: []
+  onCollisionExit2D:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerEnter2D:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8005214334106607268}
+        m_TargetAssemblyTypeName: Swordsman, Assembly-CSharp
+        m_MethodName: TryEnableRegroup
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onTriggerExit2D:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8005214334106607268}
+        m_TargetAssemblyTypeName: Swordsman, Assembly-CSharp
+        m_MethodName: TryDisableRegroup
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7533585483888845277
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,6 +312,7 @@ Transform:
   m_Children:
   - {fileID: 7496300531135266926}
   - {fileID: 6450562265670262112}
+  - {fileID: 724974921173845988}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -250,18 +347,9 @@ MonoBehaviour:
   rigidbody: {fileID: 8005214334106607271}
   anim: {fileID: 7212565581923156089}
   renderer: {fileID: 2956388190165994227}
-  movementSpeed: 3
-  movementSmoothing: 0.25
-  aboveCharacter: {fileID: 0}
-  belowCharacter: {fileID: 0}
   captain: {fileID: 0}
-  rotationAngle: 3
-  rotationMultiplier: 3
-  firstRotationSmoothing: 1
-  secondRotationSmoothing: 1
-  thirdRotationSmoothing: 0.8
-  rotationDivisor: 3
-  fallRotation: 50
+  _captain: {fileID: 0}
+  regroupCollider: {fileID: 2669128611456720430}
 --- !u!50 &8005214334106607271
 Rigidbody2D:
   serializedVersion: 4
