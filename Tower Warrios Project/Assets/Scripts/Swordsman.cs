@@ -22,6 +22,7 @@ public class Swordsman : MonoBehaviour
     [SerializeField] private Swordsman aboveCharacter;
     [SerializeField] private Swordsman belowCharacter;
     [SerializeField] private Swordsman captain;
+    [SerializeField] private Captain _captain;
     [SerializeField] private float rotationAngle = 3.0f;
     [SerializeField] private float rotationMultiplier = 1.0f;
     [FormerlySerializedAs("rotationSmoothing")] [SerializeField] private float firstRotationSmoothing = 0.05f;
@@ -37,7 +38,25 @@ public class Swordsman : MonoBehaviour
     private bool isCaptain = false;
     private float rotationValue = 0.0f;
     private float lastRotationValue = 0.0f;
-    private bool isPending = false;
+    private bool isPending = false, isOnTower = true;
+
+    public Rigidbody2D Rigidbody
+    {
+        get => rigidbody;
+        set => rigidbody = value;
+    }
+
+    public Animator Anim
+    {
+        get => anim;
+        set => anim = value;
+    }
+
+    public SpriteRenderer Renderer
+    {
+        get => renderer;
+        set => renderer = value;
+    }
 
     public Swordsman BelowCharacter
     {
@@ -66,7 +85,7 @@ public class Swordsman : MonoBehaviour
         if (!renderer)
             renderer = GetComponent<SpriteRenderer>();
         
-        inputs = new PlayerInputs();
+        /*inputs = new PlayerInputs();
         inputs.Gameplay.DirectionMovement.performed += Move;
         inputs.Gameplay.DirectionMovement.canceled += Move;
         inputs.Gameplay.Attack.performed += Attack;
@@ -79,44 +98,36 @@ public class Swordsman : MonoBehaviour
         else
         {
             DisableCaptain();
-        }
+        }*/
     }
 
-    private void Attack(InputAction.CallbackContext obj)
+    public void Attack()
     {
-        anim.SetTrigger("Attack");
+        if(isOnTower)
+            anim.SetTrigger("Attack");
     }
 
-    private void EnableCaptain()
+    public void EnableCaptain()
     {
-        inputs.Gameplay.Enable(); //NOTE: Does not appear to be fully working. Must rely on checks of the isCaptain variable.
+        //inputs.Gameplay.Enable(); //NOTE: Does not appear to be fully working. Must rely on checks of the isCaptain variable.
         isCaptain = true;
     }
 
-    private void DisableCaptain()
+    public void DisableCaptain()
     {
-        inputs.Gameplay.Disable(); //NOTE: Does not appear to be fully working. Must rely on checks of the isCaptain variable.
+        //inputs.Gameplay.Disable(); //NOTE: Does not appear to be fully working. Must rely on checks of the isCaptain variable.
         isCaptain = false;
     }
 
-    private void Move(InputAction.CallbackContext obj)
+    private void Move(float dir)
     {
-        lastDir = dir;
-        dir = obj.ReadValue<float>();
-
-        if(isCaptain)
-            anim.SetBool("Running", true);
-        
-        if (dir > 0)
-            renderer.flipX = false;
-        else if (dir < 0)
-            renderer.flipX = true;
-        else
+        if (isOnTower)
         {
-            if(isCaptain)
-                anim.SetBool("Running", false);
+            if (dir > 0)
+                renderer.flipX = false;
+            else if (dir < 0)
+                renderer.flipX = true;
         }
-
     }
 
     private void Update()
@@ -124,7 +135,7 @@ public class Swordsman : MonoBehaviour
         //transform.position += Vector3.right * (dir * Time.deltaTime);
     }
 
-    private void FixedUpdate()
+    /*private void FixedUpdate()
     {
         if (isCaptain)
         {
@@ -168,44 +179,53 @@ public class Swordsman : MonoBehaviour
                 aboveCharacter.RotateTower(rotationValue);
             //rigidbody.AddForce(Vector2.right * (dir), ForceMode2D.Impulse);
         }
-    }
+    }*/
 
     public void RotateTower(float angles)
     {
         transform.localRotation = Quaternion.Euler(0, 0, angles);
-        if(aboveCharacter)
-            aboveCharacter.RotateTower(angles * rotationMultiplier);
+        //if(aboveCharacter)
+            //aboveCharacter.RotateTower(angles * rotationMultiplier);
 
-        float tempAngles = transform.localEulerAngles.z % 360.0f;
+        /*float tempAngles = transform.localEulerAngles.z % 360.0f;
         
         if (tempAngles > 180)
             tempAngles = tempAngles - 360;
 
-        if (Mathf.Abs(tempAngles) > fallRotation/* || Mathf.Abs(transform.localEulerAngles.z) < 360.0f - fallRotation*/)
+        if (Mathf.Abs(tempAngles) > fallRotation)
         {
             FallOff();
-        }
+        }*/
     }
 
     public void FallOff()
     {
         rigidbody.simulated = true;
         transform.SetParent(null, true);
-        belowCharacter.AboveCharacter = null;
-        belowCharacter = null;
+        //belowCharacter.AboveCharacter = null;
+        //belowCharacter = null;
         transform.rotation = Quaternion.Euler(0, 0, 0);
-        
-        if(aboveCharacter)
-            aboveCharacter.FallOff(); //TODO: Stop using recurrence.
+        isOnTower = false;
+
+        //if(aboveCharacter)
+        //aboveCharacter.FallOff(); //TODO: Stop using recurrence.
     }
 
     private void OnEnable()
     {
-        inputs.Gameplay.Enable();
+        //inputs.Gameplay.Enable();
     }
 
     private void OnDisable()
     {
-        inputs.Gameplay.Disable();
+        //inputs.Gameplay.Disable();
+    }
+
+    public void Initialize(Captain newCaptain)
+    {
+        _captain = newCaptain;
+        _captain.OnMove += Move;
+        _captain.OnAttack += Attack;
+        isOnTower = true;
     }
 }
