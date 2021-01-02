@@ -41,6 +41,14 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Regroup"",
+                    ""type"": ""Button"",
+                    ""id"": ""b9fa3b96-9301-450b-b779-b176b1b35bc9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -131,6 +139,17 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""368974dd-ca45-4e18-ab35-57bf3e2f9acb"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Regroup"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -142,6 +161,7 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         m_Gameplay_DirectionMovement = m_Gameplay.FindAction("DirectionMovement", throwIfNotFound: true);
         m_Gameplay_Attack = m_Gameplay.FindAction("Attack", throwIfNotFound: true);
         m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
+        m_Gameplay_Regroup = m_Gameplay.FindAction("Regroup", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -194,6 +214,7 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_DirectionMovement;
     private readonly InputAction m_Gameplay_Attack;
     private readonly InputAction m_Gameplay_Jump;
+    private readonly InputAction m_Gameplay_Regroup;
     public struct GameplayActions
     {
         private @PlayerInputs m_Wrapper;
@@ -201,6 +222,7 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         public InputAction @DirectionMovement => m_Wrapper.m_Gameplay_DirectionMovement;
         public InputAction @Attack => m_Wrapper.m_Gameplay_Attack;
         public InputAction @Jump => m_Wrapper.m_Gameplay_Jump;
+        public InputAction @Regroup => m_Wrapper.m_Gameplay_Regroup;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -219,6 +241,9 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                 @Jump.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnJump;
+                @Regroup.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRegroup;
+                @Regroup.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRegroup;
+                @Regroup.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRegroup;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -232,6 +257,9 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
+                @Regroup.started += instance.OnRegroup;
+                @Regroup.performed += instance.OnRegroup;
+                @Regroup.canceled += instance.OnRegroup;
             }
         }
     }
@@ -241,5 +269,6 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         void OnDirectionMovement(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnRegroup(InputAction.CallbackContext context);
     }
 }

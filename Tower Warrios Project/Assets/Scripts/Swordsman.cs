@@ -15,9 +15,17 @@ public class Swordsman : MonoBehaviour
     [SerializeField] private new SpriteRenderer renderer;
 
     [Header("Tower variables")]
-    [SerializeField] private Swordsman captain;
-    [SerializeField] private Captain _captain;
+    [SerializeField] private Captain captain;
     [SerializeField] private GameObject regroupCollider;
+
+    [Header("Stats")]
+    [SerializeField] private int damage;
+    [SerializeField] private Stats health;
+
+    [Header("Others")]
+    [SerializeField] private ColliderEvents attackCollider;
+    [SerializeField] private float attackEnableTime = 0.25f;
+    [SerializeField] private GameObject regroupInfo;
 
     private PlayerInputs inputs;
     private float dir = 0.0f, lastDir = 0.0f;
@@ -27,6 +35,7 @@ public class Swordsman : MonoBehaviour
     private float rotationValue = 0.0f;
     private float lastRotationValue = 0.0f;
     private bool isPending = false, isOnTower = true, canRegroup = false;
+    private bool isGrounded = false;
 
     public Rigidbody2D Rigidbody
     {
@@ -46,7 +55,7 @@ public class Swordsman : MonoBehaviour
         set => renderer = value;
     }
 
-    public Swordsman Captain
+    public Captain Captain
     {
         get => captain;
         set => captain = value;
@@ -58,6 +67,8 @@ public class Swordsman : MonoBehaviour
         set => canRegroup = value;
     }
 
+    public Stats Health => health;
+
     private void Awake()
     {
         if (!rigidbody)
@@ -68,20 +79,85 @@ public class Swordsman : MonoBehaviour
             renderer = GetComponent<SpriteRenderer>();
     }
 
+    public void EnableGrounded(Collider2D target)
+    {
+        anim.SetBool("IsGrounded", true);
+        isGrounded = true;
+    }
+
+    public void DisableGrounded(Collider2D target)
+    {
+        anim.SetBool("IsGrounded", false);
+        isGrounded = false;
+    }
+
+    public void OnAttackColliderDetect(Collider2D target)
+    {
+        Debug.Log($"Detected {target.gameObject}", target.gameObject);
+        if (target.TryGetComponent<Swordsman>(out Swordsman temp))
+        {
+            Debug.Log("Detected enemy.");
+            temp.health.Value -= damage;
+        }
+    }
+
+    public void PlayHitAnimation()
+    {
+        if(health.Value > health.MinValue)
+            anim.SetTrigger("TakeDamage");
+    }
+
+    public void Die()
+    {
+        anim.SetTrigger("Death");
+        Debug.Log("Death!!!");
+    }
+
+    public void OnDeath()
+    {
+        int index = captain.Swordsmen.FindIndex(swordsman => swordsman.GetHashCode() == this.GetHashCode());
+        if (index == -1)
+        {
+            Debug.LogError($"The swordsman {gameObject} is not on the captain {captain.gameObject} list.", gameObject);
+            Destroy(gameObject);
+            return;
+        }
+        else if (index == 0)
+        {
+            captain.OnCaptainDeath();
+            Destroy(gameObject);
+            return;
+        }
+        captain.ProcessFalloff(index);
+        Destroy(gameObject);
+    }
+
     public void Attack()
     {
-        if(isOnTower)
+        StartCoroutine(AttackCoroutine());
+    }
+
+    private IEnumerator AttackCoroutine()
+    {
+        if (isOnTower)
+        {
             anim.SetTrigger("Attack");
+            attackCollider.gameObject.SetActive(true);
+            yield return new WaitForSeconds(attackEnableTime);
+            attackCollider.gameObject.SetActive(false);
+        }
     }
 
     public void EnableCaptain()
     {
         isCaptain = true;
+        anim.SetFloat("IsCaptain", 1.0f);
     }
 
     public void DisableCaptain()
     {
         isCaptain = false;
+        anim.SetFloat("IsCaptain", 0.0f);
     }
 
     private void Move(float dir)
@@ -89,9 +165,19 @@ public class Swordsman : MonoBehaviour
         if (isOnTower)
         {
             if (dir > 0)
+            {
                 renderer.flipX = false;
+                attackCollider.transform.localPosition = new Vector3(Mathf.Abs(attackCollider.transform.localPosition.x), 
+                    attackCollider.transform.localPosition.y, 
+                    attackCollider.transform.localPosition.z);
+            }
             else if (dir < 0)
+            {
                 renderer.flipX = true;
+                attackCollider.transform.localPosition = new Vector3(-Mathf.Abs(attackCollider.transform.localPosition.x), 
+                    attackCollider.transform.localPosition.y, 
+                    attackCollider.transform.localPosition.z);
+            }
         }
     }
 
@@ -102,18 +188,19 @@ public class Swordsman : MonoBehaviour
 
     public void FallOff()
     {
-        rigidbody.simulated = true;
+        rigidbody.bodyType  = RigidbodyType2D.Dynamic;
         transform.SetParent(null, true);
         transform.rotation = Quaternion.Euler(0, 0, 0);
         isOnTower = false;
         regroupCollider.SetActive(true);
+        anim.SetTrigger("Falloff");
     }
 
     public void Initialize(Captain newCaptain)
     {
-        _captain = newCaptain;
-        _captain.OnMove += Move;
-        _captain.OnAttack += Attack;
+        captain = newCaptain;
+        captain.OnMove += Move;
+        captain.OnAttack += Attack;
         isOnTower = true;
         regroupCollider.SetActive(false);
     }
@@ -121,8 +208,11 @@ public class Swordsman : MonoBehaviour
     public void Regroup(Captain newTarget)
     {
         newTarget.Regroup(this);
-        rigidbody.simulated = false;
+        rigidbody.bodyType = RigidbodyType2D.Kinematic;
+        rigidbody.velocity = Vector2.zero;
         isOnTower = true;
+        regroupCollider.SetActive(false);
+        anim.SetTrigger("Regroup");
     }
 
     public void TryEnableRegroup(Collider2D other)
@@ -131,6 +221,11 @@ public class Swordsman : MonoBehaviour
         if (temp)
         {
             canRegroup = true;
+            if (!temp.IsAi)
+            {
+                regroupInfo.SetActive(true);
+                temp.ToAdd.Add(this);
+            }
         }
     }
     
@@ -140,6 +235,11 @@ public class Swordsman : MonoBehaviour
         if (temp)
         {
             canRegroup = false;
+            if (!temp.IsAi)
+            {
+                regroupInfo.SetActive(false);
+                temp.ToAdd.Remove(this);
+            }
         }
     }
 }

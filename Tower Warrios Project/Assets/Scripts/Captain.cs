@@ -12,6 +12,7 @@ public class Captain : MonoBehaviour
     
     [Header("Tower variables")] 
     [SerializeField] private List<Swordsman> swordsmen;
+    [SerializeField] private List<Swordsman> toAdd;
     [SerializeField] private float rotationAngle = 3.0f;
     [SerializeField] private float rotationMultiplier = 1.0f;
     [SerializeField] private float firstRotationSmoothing = 0.05f;
@@ -41,6 +42,12 @@ public class Captain : MonoBehaviour
     public event CommandSwordsman OnFall;
     public event CommandFloat OnMove;
 
+    public List<Swordsman> Swordsmen => swordsmen;
+
+    public bool IsAi => isAI;
+
+    public List<Swordsman> ToAdd => toAdd;
+    
     public Swordsman GetCaptain
     {
         get => swordsmen[0];
@@ -54,17 +61,27 @@ public class Captain : MonoBehaviour
             inputs.Gameplay.DirectionMovement.performed += Move;
             inputs.Gameplay.DirectionMovement.canceled += Move;
             inputs.Gameplay.Attack.performed += Attack;
+            inputs.Gameplay.Regroup.performed += TryRegroup;
         }
 
         swordsmen[0].EnableCaptain();
         swordsmen[0].Initialize(this);
+        swordsmen[0].Rigidbody.bodyType = RigidbodyType2D.Dynamic;
         for (int i = 1; i < swordsmen.Count; i++)
         {
             swordsmen[i].DisableCaptain();
             swordsmen[i].Initialize(this);
         }
     }
-    
+
+    private void TryRegroup(InputAction.CallbackContext obj)
+    {
+        for (int i = 0; i < toAdd.Count; i++)
+        {
+            toAdd[i].Regroup(this);
+        }
+    }
+
     public void Attack(InputAction.CallbackContext obj)
     {
         OnAttack?.Invoke();
@@ -147,14 +164,8 @@ public class Captain : MonoBehaviour
 
             if (Mathf.Abs(tempAngles) > fallRotation)
             {
-                
-                for (int j = swordsmen.Count - 1; j >= i; j--)
-                {
-                    swordsmen[j].FallOff();
-                    OnFall?.Invoke(swordsmen[j]);
-                    swordsmen.RemoveAt(j);
-                }
-                
+                ProcessFalloff(i);
+
                 break;
             }
         }
@@ -163,7 +174,27 @@ public class Captain : MonoBehaviour
             //aboveCharacter.RotateTower(rotationValue);
         //rigidbody.AddForce(Vector2.right * (dir), ForceMode2D.Impulse);
     }
-    
+
+    public void ProcessFalloff(int i)
+    {
+        for (int j = swordsmen.Count - 1; j >= i; j--)
+        {
+            swordsmen[j].FallOff();
+            OnFall?.Invoke(swordsmen[j]);
+            swordsmen.RemoveAt(j);
+        }
+    }
+
+    public void OnCaptainDeath()
+    {
+        if(swordsmen.Count >= 2)
+            swordsmen[1].transform.SetParent(transform, true);
+        
+        swordsmen[0].transform.SetParent(null, true);
+        swordsmen[0].FallOff();
+        swordsmen.RemoveAt(0);
+    }
+
     private void OnEnable()
     {
         if(!isAI)
