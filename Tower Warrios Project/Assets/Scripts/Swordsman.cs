@@ -26,6 +26,7 @@ public class Swordsman : MonoBehaviour
     [SerializeField] private ColliderEvents attackCollider;
     [SerializeField] private float attackEnableTime = 0.25f;
     [SerializeField] private GameObject regroupInfo;
+    [SerializeField] private Vector2 jumpForceVector;
 
     private PlayerInputs inputs;
     private float dir = 0.0f, lastDir = 0.0f;
@@ -69,6 +70,10 @@ public class Swordsman : MonoBehaviour
 
     public Stats Health => health;
 
+    public bool IsGrounded => isGrounded;
+
+    public Vector2 JumpForceVector => jumpForceVector;
+    
     private void Awake()
     {
         if (!rigidbody)
@@ -152,12 +157,15 @@ public class Swordsman : MonoBehaviour
     {
         isCaptain = true;
         anim.SetFloat("IsCaptain", 1.0f);
+        rigidbody.bodyType = RigidbodyType2D.Dynamic;
     }
 
     public void DisableCaptain()
     {
         isCaptain = false;
         anim.SetFloat("IsCaptain", 0.0f);
+        rigidbody.bodyType = RigidbodyType2D.Kinematic;
+
     }
 
     private void Move(float dir)
@@ -241,5 +249,10 @@ public class Swordsman : MonoBehaviour
                 temp.ToAdd.Remove(this);
             }
         }
+    }
+
+    public void Victory()
+    {
+        anim.SetTrigger("Victory");
     }
 }

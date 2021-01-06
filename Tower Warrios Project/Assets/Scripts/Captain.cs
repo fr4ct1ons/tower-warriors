@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 
@@ -25,6 +27,8 @@ public class Captain : MonoBehaviour
     [Space]
     [SerializeField] private bool isAI = false;
     
+    [SerializeField] private UnityEvent defeatEvent;
+
     private PlayerInputs inputs;
     private float dir = 0.0f, lastDir = 0.0f;
     private Vector2 tempVelocity = Vector2.zero;
@@ -62,6 +66,7 @@ public class Captain : MonoBehaviour
             inputs.Gameplay.DirectionMovement.canceled += Move;
             inputs.Gameplay.Attack.performed += Attack;
             inputs.Gameplay.Regroup.performed += TryRegroup;
+            inputs.Gameplay.Jump.performed += Jump;
         }
 
         swordsmen[0].EnableCaptain();
@@ -71,6 +76,42 @@ public class Captain : MonoBehaviour
         {
             swordsmen[i].DisableCaptain();
             swordsmen[i].Initialize(this);
+        }
+    }
+
+    private void Jump(InputAction.CallbackContext obj)
+    {
+        Jump();
+    }
+    
+    public void Jump()
+    {
+        if (swordsmen[0].IsGrounded)
+        {
+            swordsmen[0].Rigidbody.AddForce(swordsmen[0].JumpForceVector);
+            StartCoroutine(JumpCoroutine());
+        }
+    }
+
+    private IEnumerator JumpCoroutine()
+    {
+        for (int i = 0; i < swordsmen.Count; i++) //TODO: Convert to event.
+        {
+            swordsmen[i].Anim.SetTrigger("Jump");
+        }
+
+        while (true)
+        {
+            swordsmen[0].Anim.SetFloat("YVelocity", swordsmen[0].Rigidbody.velocity.y);
+            if (swordsmen[0].Rigidbody.velocity.y < 0)
+            {
+                for (int i = 1; i < swordsmen.Count; i++) //TODO: Convert to event.
+                {
+                    swordsmen[i].Anim.SetTrigger("ForceIdle");
+                }
+                break;
+            }
+            yield return new WaitForEndOfFrame();
         }
     }
 
@@ -193,6 +234,31 @@ public class Captain : MonoBehaviour
         swordsmen[0].transform.SetParent(null, true);
         swordsmen[0].FallOff();
         swordsmen.RemoveAt(0);
+        
+        if (swordsmen.Count > 0)
+        {
+            swordsmen[0].EnableCaptain();
+        }
+        else
+        {
+            OnDefeat();
+        }
+    }
+
+    private void OnDefeat()
+    {
+        defeatEvent.Invoke();
+    }
+
+    public void OnVictory()
+    {
+        if(!isAI)
+            inputs.Disable();
+        
+        for (int i = 0; i < swordsmen.Count; i++)
+        {
+            swordsmen[i].Victory();
+        }
     }
 
     private void OnEnable()

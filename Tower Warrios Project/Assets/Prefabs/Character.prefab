@@ -710,6 +710,7 @@ MonoBehaviour:
   attackCollider: {fileID: 3569450513681654920}
   attackEnableTime: 0.25
   regroupInfo: {fileID: 3688932171822826397}
+  jumpForceVector: {x: 0, y: 300}
 --- !u!50 &8005214334106607271
 Rigidbody2D:
   serializedVersion: 4
