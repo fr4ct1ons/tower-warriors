@@ -21,7 +21,9 @@ public class Swordsman : MonoBehaviour
     [Header("Stats")]
     [SerializeField] private int damage;
     [SerializeField] private Stats health;
-
+    [SerializeField] private List<SpriteRenderer> hearts;
+    [SerializeField] private Sprite fullHeart, emptyHeart;
+    
     [Header("Others")]
     [SerializeField] private ColliderEvents attackCollider;
     [SerializeField] private float attackEnableTime = 0.25f;
@@ -108,6 +110,7 @@ public class Swordsman : MonoBehaviour
 
     public void PlayHitAnimation()
     {
+        hearts[health.Value].sprite = emptyHeart;
         if(health.Value > health.MinValue)
             anim.SetTrigger("TakeDamage");
     }
