@@ -54,9 +54,18 @@ public class Captain : MonoBehaviour
     
     public Swordsman GetCaptain
     {
-        get => swordsmen[0];
+        get
+        {
+            if (swordsmen.Count > 0)
+            {
+                return swordsmen[0];
+            }
+
+            return null;
+        }
+        
     }
-    
+
     private void Awake()
     {
         if (!isAI)

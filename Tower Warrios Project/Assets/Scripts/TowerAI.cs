@@ -10,12 +10,18 @@ public class TowerAI : MonoBehaviour
     [SerializeField] private Captain opponent;
     
     [Header("AI Variables")]
-    [SerializeField] private float minAttackDistance = 1.5f;
+    [SerializeField] private float minAttackDistance = 1.2f;
+    [SerializeField] private float attackCooldown = 1.5f;
     [SerializeField] private float timeForRegroup = 1.0f;
+    [SerializeField] private float movementSpeed = 1.0f;
     [SerializeField] private int minFallenSwordsmen = 3;
     [SerializeField] private List<Swordsman> fallenSwordsmen;
-
-    private bool regroupSwordsmen = false;
+    [SerializeField] private int currentState;
+    
+    [Space]
+    
+    [SerializeField] private bool regroupSwordsmen = false;
+    [SerializeField] private float currentCooldown = 0.0f;
 
 
     private void Awake()
@@ -34,6 +40,7 @@ public class TowerAI : MonoBehaviour
         }
         
         target.OnFall += OnCharacterFall;
+        currentCooldown = attackCooldown;
     }
 
     private void OnCharacterFall(Swordsman fallen)
@@ -53,6 +60,8 @@ public class TowerAI : MonoBehaviour
 
     void Update()
     {
+        currentCooldown += Time.deltaTime;
+        
         if (regroupSwordsmen)
         {
             target.Move(fallenSwordsmen[0].transform.position.x > target.GetCaptain.transform.position.x ? 1.0f : -1.0f);
@@ -66,22 +75,31 @@ public class TowerAI : MonoBehaviour
                     regroupSwordsmen = false;
                 }
             }
+
+            currentState = 1;
         }
         else if (Vector3.Distance(target.GetCaptain.transform.position, opponent.GetCaptain.transform.position) < minAttackDistance)
         {
-            target.Attack(new InputAction.CallbackContext());
-            target.Move(0.0f);
-            Debug.Log("Attacking");
+            if (currentCooldown > attackCooldown)
+            {
+                target.Attack(new InputAction.CallbackContext());
+                target.Move(0.0f);
+                Debug.Log("Attacking");
+                currentCooldown = 0.0f;
+                currentState = 2;
+            }
         }
-        else if (opponent.transform.position.x < target.transform.position.x) //Opponent at left
+        else if (opponent.GetCaptain.transform.position.x < target.transform.position.x) //Opponent at left
         {
             target.Move(-1.0f);
             Debug.Log("Left");
+            currentState = 3;
         }
-        else if (opponent.transform.position.x < target.transform.position.x) //Opponent at right
+        else if (opponent.GetCaptain.transform.position.x < target.transform.position.x) //Opponent at right
         {
             target.Move(1.0f);
             Debug.Log("Right");
+            currentState = 4;
         }
     }
 }

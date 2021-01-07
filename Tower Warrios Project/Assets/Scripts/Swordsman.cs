@@ -39,6 +39,7 @@ public class Swordsman : MonoBehaviour
     private float lastRotationValue = 0.0f;
     private bool isPending = false, isOnTower = true, canRegroup = false;
     private bool isGrounded = false;
+    private bool isDead = false;
 
     public Rigidbody2D Rigidbody
     {
@@ -117,8 +118,12 @@ public class Swordsman : MonoBehaviour
 
     public void Die()
     {
-        anim.SetTrigger("Death");
-        Debug.Log("Death!!!");
+        if (!isDead)
+        {
+            isDead = true;
+            anim.SetTrigger("Death");
+            Debug.Log("Death!!!");
+        }
     }
 
     public void OnDeath()
