@@ -24,3 +24,5 @@ public class StaticAnimationEvents : MonoBehaviour
         attackEvent.Invoke();
     }
 }
+
+

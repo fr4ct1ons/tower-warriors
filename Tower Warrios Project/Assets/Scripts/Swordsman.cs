@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Composites;
@@ -29,6 +30,7 @@ public class Swordsman : MonoBehaviour
     [SerializeField] private float attackEnableTime = 0.25f;
     [SerializeField] private GameObject regroupInfo;
     [SerializeField] private Vector2 jumpForceVector;
+    [SerializeField] private Transform camView;
 
     private PlayerInputs inputs;
     private float dir = 0.0f, lastDir = 0.0f;
@@ -38,9 +40,11 @@ public class Swordsman : MonoBehaviour
     private float rotationValue = 0.0f;
     private float lastRotationValue = 0.0f;
     private bool isPending = false, isOnTower = true, canRegroup = false;
-    private bool isGrounded = false;
+    [SerializeField] private bool isGrounded = false;
     private bool isDead = false;
 
+    public Transform CamView => camView;
+    
     public Rigidbody2D Rigidbody
     {
         get => rigidbody;
@@ -122,6 +126,7 @@ public class Swordsman : MonoBehaviour
         {
             isDead = true;
             anim.SetTrigger("Death");
+            anim.SetBool("IsDead", true);
             Debug.Log("Death!!!");
         }
     }
@@ -165,6 +170,7 @@ public class Swordsman : MonoBehaviour
     {
         isCaptain = true;
         anim.SetFloat("IsCaptain", 1.0f);
+        transform.rotation = quaternion.Euler(0.0f, 0.0f, 0.0f);
         rigidbody.bodyType = RigidbodyType2D.Dynamic;
     }
 
@@ -219,6 +225,12 @@ public class Swordsman : MonoBehaviour
         captain.OnAttack += Attack;
         isOnTower = true;
         regroupCollider.SetActive(false);
+    }
+
+    private void OnDestroy()
+    {
+        captain.OnMove -= Move;
+        captain.OnAttack -= Attack;
     }
 
     public void Regroup(Captain newTarget)

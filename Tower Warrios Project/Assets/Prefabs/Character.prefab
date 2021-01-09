@@ -529,8 +529,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.4, y: 0.15}
+  m_Offset: {x: -0.000000004043004, y: -0.03391518}
+  m_Size: {x: 0.506853, y: 0.24249724}
   m_Direction: 1
 --- !u!114 &6866953339389930236
 MonoBehaviour:
@@ -807,6 +807,8 @@ MonoBehaviour:
   attackEnableTime: 0.25
   regroupInfo: {fileID: 153232132382838374}
   jumpForceVector: {x: 0, y: 300}
+  camView: {fileID: 7374899714238266407}
+  isGrounded: 0
 --- !u!50 &8005214334106607271
 Rigidbody2D:
   serializedVersion: 4

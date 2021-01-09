@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -23,6 +24,9 @@ public class Captain : MonoBehaviour
     [SerializeField] private float rotationDivisor = 3.0f;
     [SerializeField] private float fallRotation = 20.0f;
     [SerializeField] private float characterHeight = 0.97f;
+    
+    [Header("Others")] 
+    [SerializeField] private CinemachineVirtualCamera camera;
 
     [Space]
     [SerializeField] private bool isAI = false;
@@ -247,6 +251,11 @@ public class Captain : MonoBehaviour
         if (swordsmen.Count > 0)
         {
             swordsmen[0].EnableCaptain();
+            if (!isAI)
+            {
+                camera.Follow = swordsmen[0].CamView;
+                camera.LookAt = swordsmen[0].CamView;
+            }
         }
         else
         {

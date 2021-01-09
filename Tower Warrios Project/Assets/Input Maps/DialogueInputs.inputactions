@@ -1,0 +1,33 @@
+{
+    "name": "DialogueInputs",
+    "maps": [
+        {
+            "name": "Gameplay",
+            "id": "ee857420-eb07-48cc-bb38-83da0adbbc31",
+            "actions": [
+                {
+                    "name": "Advance",
+                    "type": "Button",
+                    "id": "523c0fbd-c157-451e-8c5b-4db54acf390b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a2c5ac45-8795-4f47-bff1-25687bb90ea5",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Advance",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
