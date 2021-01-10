@@ -80,6 +80,9 @@ public class PersistentAudioPlayer : MonoBehaviour
     {
         if (followMainCamera)
         {
+            if(!mainCam)
+                mainCam = Camera.main.transform;
+            
             transform.position = mainCam.position;
         }
     }

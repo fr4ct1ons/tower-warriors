@@ -8861,7 +8861,7 @@ PrefabInstance:
       objectReference: {fileID: 606004828}
     - target: {fileID: 3100843081689929899, guid: 0c94aa04f5c9bbb4f99f4cbd4491ee80, type: 3}
       propertyPath: defeatEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3100843081689929899, guid: 0c94aa04f5c9bbb4f99f4cbd4491ee80, type: 3}
       propertyPath: defeatEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -8886,11 +8886,11 @@ PrefabInstance:
     - target: {fileID: 3100843081689929899, guid: 0c94aa04f5c9bbb4f99f4cbd4491ee80, type: 3}
       propertyPath: defeatEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 11400000, guid: 2fd4779a498396f46a49c4c36c90e09a, type: 2}
+      objectReference: {fileID: 823496203}
     - target: {fileID: 3100843081689929899, guid: 0c94aa04f5c9bbb4f99f4cbd4491ee80, type: 3}
       propertyPath: defeatEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
-      objectReference: {fileID: 823496203}
+      objectReference: {fileID: 1592361617}
     - target: {fileID: 3100843081689929899, guid: 0c94aa04f5c9bbb4f99f4cbd4491ee80, type: 3}
       propertyPath: defeatEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Target
       value: 
@@ -8917,11 +8917,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3100843081689929899, guid: 0c94aa04f5c9bbb4f99f4cbd4491ee80, type: 3}
       propertyPath: defeatEvent.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: SetValue
+      value: SetActive
       objectReference: {fileID: 0}
     - target: {fileID: 3100843081689929899, guid: 0c94aa04f5c9bbb4f99f4cbd4491ee80, type: 3}
       propertyPath: defeatEvent.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: SetActive
+      value: set_enabled
       objectReference: {fileID: 0}
     - target: {fileID: 3100843081689929899, guid: 0c94aa04f5c9bbb4f99f4cbd4491ee80, type: 3}
       propertyPath: defeatEvent.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
@@ -8933,11 +8933,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3100843081689929899, guid: 0c94aa04f5c9bbb4f99f4cbd4491ee80, type: 3}
       propertyPath: defeatEvent.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: GlobalBool, Assembly-CSharp
+      value: UnityEngine.GameObject, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 3100843081689929899, guid: 0c94aa04f5c9bbb4f99f4cbd4491ee80, type: 3}
       propertyPath: defeatEvent.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
-      value: UnityEngine.GameObject, UnityEngine
+      value: UnityEngine.Behaviour, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 3100843081689929899, guid: 0c94aa04f5c9bbb4f99f4cbd4491ee80, type: 3}
       propertyPath: defeatEvent.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
@@ -8949,7 +8949,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3100843081689929899, guid: 0c94aa04f5c9bbb4f99f4cbd4491ee80, type: 3}
       propertyPath: defeatEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_BoolArgument
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3100843081689929899, guid: 0c94aa04f5c9bbb4f99f4cbd4491ee80, type: 3}
       propertyPath: defeatEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_BoolArgument

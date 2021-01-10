@@ -797,6 +797,7 @@ MonoBehaviour:
     onHitMaximum:
       m_PersistentCalls:
         m_Calls: []
+    isInvincible: 0
   hearts:
   - {fileID: 4709937002618271452}
   - {fileID: 4672521925645177187}
@@ -809,6 +810,7 @@ MonoBehaviour:
   jumpForceVector: {x: 0, y: 300}
   camView: {fileID: 7374899714238266407}
   isGrounded: 0
+  invincibilityTime: 1.5
 --- !u!50 &8005214334106607271
 Rigidbody2D:
   serializedVersion: 4

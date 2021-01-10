@@ -1582,7 +1582,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Made by <link="https://twitter.com/euopaulo">@euopaulo</link> & <link="https://twitter.com/fr4ct1ons">@fr4ct1ons</link>
+  m_text: Made by <color=green><link="https://twitter.com/euopaulo">@euopaulo</link></color>
+    & <color=green><link="https://twitter.com/fr4ct1ons">@fr4ct1ons</link></color>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4ef33c10d40dc0b48a5c4e7889d3653a, type: 2}
   m_sharedMaterial: {fileID: 5119076170595087535, guid: 4ef33c10d40dc0b48a5c4e7889d3653a, type: 2}
@@ -3944,6 +3945,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1354352222}
+        m_TargetAssemblyTypeName: EventAuxiliar, Assembly-CSharp
+        m_MethodName: ResetStaticWinningCaptain
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1354352224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3994,8 +4007,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a19a67e474d0bb48bf5cf36eb3e6908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  valueToCheck: {fileID: 11400000, guid: 18630b88637d9824892161008feb77af, type: 2}
-  fallbackValue: 0
+  valueToCheck: {fileID: 11400000, guid: c4543a5528102f94d856fead4ef6ca78, type: 2}
+  index: 2
+  fallbackValue: 1
   target: {fileID: 0}
 --- !u!1 &1387374476
 GameObject:
@@ -4106,6 +4120,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1354352222}
+        m_TargetAssemblyTypeName: EventAuxiliar, Assembly-CSharp
+        m_MethodName: ResetStaticWinningCaptain
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1387374480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4156,8 +4182,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a19a67e474d0bb48bf5cf36eb3e6908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  valueToCheck: {fileID: 11400000, guid: 16c31b7df04e8fd47a2bfbcaf402a8d1, type: 2}
-  fallbackValue: 0
+  valueToCheck: {fileID: 11400000, guid: c4543a5528102f94d856fead4ef6ca78, type: 2}
+  index: 4
+  fallbackValue: 1
   target: {fileID: 0}
 --- !u!1 &1402138557
 GameObject:
@@ -4594,6 +4621,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1354352222}
+        m_TargetAssemblyTypeName: EventAuxiliar, Assembly-CSharp
+        m_MethodName: ResetStaticWinningCaptain
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1445977084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4644,8 +4683,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a19a67e474d0bb48bf5cf36eb3e6908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  valueToCheck: {fileID: 11400000, guid: 3b601cd122cd3824190d00fa48b81abb, type: 2}
-  fallbackValue: 0
+  valueToCheck: {fileID: 11400000, guid: c4543a5528102f94d856fead4ef6ca78, type: 2}
+  index: 3
+  fallbackValue: 1
   target: {fileID: 0}
 --- !u!1 &1455320905
 GameObject:
@@ -5612,6 +5652,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 974cc908c19d62744aa195b41cd4ae73, type: 2}
           m_ObjectArgumentAssemblyTypeName: CustomSceneAsset, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1354352222}
+        m_TargetAssemblyTypeName: EventAuxiliar, Assembly-CSharp
+        m_MethodName: ResetStaticWinningCaptain
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -6908,6 +6960,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1354352222}
+        m_TargetAssemblyTypeName: EventAuxiliar, Assembly-CSharp
+        m_MethodName: ResetStaticWinningCaptain
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1989997466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6958,7 +7022,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a19a67e474d0bb48bf5cf36eb3e6908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  valueToCheck: {fileID: 11400000, guid: 2fd4779a498396f46a49c4c36c90e09a, type: 2}
+  valueToCheck: {fileID: 11400000, guid: c4543a5528102f94d856fead4ef6ca78, type: 2}
+  index: 1
   fallbackValue: 1
   target: {fileID: 0}
 --- !u!1 &2020977814

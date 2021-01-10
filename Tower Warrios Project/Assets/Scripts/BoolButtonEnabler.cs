@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class BoolButtonEnabler : MonoBehaviour
 {
     [SerializeField] private GlobalBool valueToCheck;
+    [SerializeField] private int index = 0;
     [SerializeField] private bool fallbackValue;
     [SerializeField] private Button target;
 
@@ -25,6 +26,6 @@ public class BoolButtonEnabler : MonoBehaviour
 
     private void Start()
     {
-        target.interactable = valueToCheck.GetValue();
+        target.interactable = valueToCheck.values[index];
     }
 }

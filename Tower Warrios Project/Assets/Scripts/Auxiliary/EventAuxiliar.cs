@@ -42,4 +42,9 @@ public class EventAuxiliar : MonoBehaviour
     {
         Debug.Log(value);
     }
+
+    public void ResetStaticWinningCaptain()
+    {
+        Captain.winningCaptain = 0;
+    }
 }
