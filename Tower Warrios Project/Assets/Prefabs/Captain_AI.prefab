@@ -54,13 +54,16 @@ MonoBehaviour:
   - {fileID: 7691675417277104213}
   toAdd: []
   rotationAngle: 3
-  rotationMultiplier: 3
+  rotationMultiplier: 2.5
   firstRotationSmoothing: 1
   secondRotationSmoothing: 1
   thirdRotationSmoothing: 0.8
   rotationDivisor: 3
-  fallRotation: 50
+  fallRotation: 35
   characterHeight: 0.97
+  fallChance: 94
+  camera: {fileID: 0}
+  opponent: {fileID: 0}
   isAI: 1
   defeatEvent:
     m_PersistentCalls:
@@ -77,6 +80,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  wonMatch: 0
 --- !u!114 &3100843081689929898
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -42,6 +42,10 @@ public class Swordsman : MonoBehaviour
     private bool isPending = false, isOnTower = true, canRegroup = false;
     [SerializeField] private bool isGrounded = false;
     private bool isDead = false;
+    private List<Collider2D> groundDetected = new List<Collider2D>();
+    private float currentInvincibilityCooldown = 0.0f;
+    [SerializeField] private float invincibilityTime = 1.5f;
+    private bool isInvincible = false;
 
     public Transform CamView => camView;
     
@@ -80,7 +84,11 @@ public class Swordsman : MonoBehaviour
     public bool IsGrounded => isGrounded;
 
     public Vector2 JumpForceVector => jumpForceVector;
-    
+    public bool Flipped
+    {
+        get => renderer.flipX;
+    }
+
     private void Awake()
     {
         if (!rigidbody)
@@ -93,14 +101,21 @@ public class Swordsman : MonoBehaviour
 
     public void EnableGrounded(Collider2D target)
     {
+        groundDetected.Add(target);
         anim.SetBool("IsGrounded", true);
         isGrounded = true;
     }
 
     public void DisableGrounded(Collider2D target)
     {
-        anim.SetBool("IsGrounded", false);
-        isGrounded = false;
+        if (groundDetected.Remove(target))
+        {
+            if (groundDetected.Count <= 0)
+            {
+                anim.SetBool("IsGrounded", false);
+                isGrounded = false;
+            }
+        }
     }
 
     public void OnAttackColliderDetect(Collider2D target)
@@ -115,9 +130,33 @@ public class Swordsman : MonoBehaviour
 
     public void PlayHitAnimation()
     {
-        hearts[health.Value].sprite = emptyHeart;
-        if(health.Value > health.MinValue)
-            anim.SetTrigger("TakeDamage");
+        if (!health.IsInvincible)
+        {
+            hearts[health.Value].sprite = emptyHeart;
+            if (health.Value > health.MinValue)
+            {
+                anim.SetTrigger("TakeDamage");
+                StartCoroutine(CorutineDamage());
+            }
+        }
+    }
+
+    private IEnumerator CorutineDamage()
+    {
+        currentInvincibilityCooldown = 0.0f;
+        health.IsInvincible = true;
+        while (currentInvincibilityCooldown < invincibilityTime)
+        {
+            renderer.color = new Color(renderer.color.r, renderer.color.g, renderer.color.b, 0.0f);
+            currentInvincibilityCooldown += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+            renderer.color = new Color(renderer.color.r, renderer.color.g, renderer.color.b, 1.0f);
+            currentInvincibilityCooldown += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+        
+        renderer.color = new Color(renderer.color.r, renderer.color.g, renderer.color.b, 1.0f);
+        health.IsInvincible = false;
     }
 
     public void Die()

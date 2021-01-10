@@ -14,7 +14,14 @@ public class Stats
     [SerializeField] private int value = 100;
     [SerializeField] private StatEvent onUpdateValue;
     [SerializeField] private UnityEvent  onHitMinimum, onHitMaximum;
+    [SerializeField] private bool isInvincible;
 
+    public bool IsInvincible
+    {
+        get => isInvincible;
+        set => isInvincible = value;
+    }
+    
     public int MinValue => minValue;
     
     public int Value
@@ -22,6 +29,9 @@ public class Stats
         get => value;
         set
         {
+            if(isInvincible)
+                return;
+            
             this.value = value;
             if (this.value <= minValue)
             {

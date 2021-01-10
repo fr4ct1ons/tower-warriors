@@ -5,6 +5,7 @@ using Cinemachine;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
 
 public class Captain : MonoBehaviour
@@ -24,10 +25,12 @@ public class Captain : MonoBehaviour
     [SerializeField] private float rotationDivisor = 3.0f;
     [SerializeField] private float fallRotation = 20.0f;
     [SerializeField] private float characterHeight = 0.97f;
-    
+    [SerializeField] private int fallChance = 85;
+
     [Header("Others")] 
     [SerializeField] private CinemachineVirtualCamera camera;
-
+    [SerializeField] private Captain opponent;
+    
     [Space]
     [SerializeField] private bool isAI = false;
     
@@ -41,6 +44,11 @@ public class Captain : MonoBehaviour
     private float rotationValue = 0.0f;
     private float lastRotationValue = 0.0f;
     private bool isPending = false;
+    private bool lostMatch = false;
+    public bool wonMatch = false;
+
+    // 2 = AI, 1 = Player
+    public static int winningCaptain = 0; // TODO: Move to a GameManager or MatchManager.
 
     public delegate void Command();
     public delegate void CommandSwordsman(Swordsman character);
@@ -218,9 +226,13 @@ public class Captain : MonoBehaviour
 
             if (Mathf.Abs(tempAngles) > fallRotation)
             {
-                ProcessFalloff(i);
+                int random = Random.Range(1, 101);
 
-                break;
+                if (random > fallChance)
+                {
+                    ProcessFalloff(i);
+                    break;
+                }
             }
         }
         
@@ -265,11 +277,18 @@ public class Captain : MonoBehaviour
 
     private void OnDefeat()
     {
-        defeatEvent.Invoke();
+        if(winningCaptain == 0)
+        {
+            winningCaptain = isAI ? 2 : 1;
+            lostMatch = true;
+            opponent.wonMatch = true;
+            defeatEvent.Invoke();
+        }
     }
 
     public void OnVictory()
     {
+
         if(!isAI)
             inputs.Disable();
         

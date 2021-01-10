@@ -256,7 +256,9 @@ MonoBehaviour:
   attackCollider: {fileID: 4771885211695788218}
   attackEnableTime: 0.25
   regroupInfo: {fileID: 4648172513623742383}
-  jumpForceVector: {x: 0, y: 0}
+  jumpForceVector: {x: 0, y: 300}
+  camView: {fileID: 0}
+  isGrounded: 0
 --- !u!50 &2064940012105861781
 Rigidbody2D:
   serializedVersion: 4
@@ -323,8 +325,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.4, y: 0.15}
+  m_Offset: {x: -0.0000000047318762, y: -0.03969386}
+  m_Size: {x: 0.50332266, y: 0.22938932}
   m_Direction: 1
 --- !u!114 &3241546818454126286
 MonoBehaviour:
@@ -769,6 +771,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  deathBeginEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  attackEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &8183730322639555201
 PrefabInstance:
   m_ObjectHideFlags: 0

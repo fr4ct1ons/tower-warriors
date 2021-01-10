@@ -89,17 +89,21 @@ public class TowerAI : MonoBehaviour
                 currentState = 2;
             }
         }
-        else if (opponent.GetCaptain.transform.position.x < target.transform.position.x) //Opponent at left
+        else if (opponent.GetCaptain.transform.position.x < target.GetCaptain.transform.position.x) //Opponent at left
         {
-            target.Move(-1.0f);
+            target.Move(-movementSpeed);
             Debug.Log("Left");
             currentState = 3;
         }
-        else if (opponent.GetCaptain.transform.position.x < target.transform.position.x) //Opponent at right
+        else if (opponent.GetCaptain.transform.position.x > target.GetCaptain.transform.position.x) //Opponent at right
         {
-            target.Move(1.0f);
+            target.Move(movementSpeed);
             Debug.Log("Right");
             currentState = 4;
+        }
+        else
+        {
+            Debug.Log("None is true??????");
         }
     }
 }
